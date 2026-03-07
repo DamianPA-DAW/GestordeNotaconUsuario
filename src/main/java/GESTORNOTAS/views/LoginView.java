@@ -49,14 +49,14 @@ public class LoginView extends JFrame {
         panel.add(Box.createRigidArea(new Dimension(0, 15)));
         panel.add(btnLogin);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
-        panel.add(btnIrRegistro); // Usar la variable directamente
+        panel.add(btnIrRegistro);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(lblMensaje);
 
         add(panel);
     }
 
-    // Getters corregidos
+    // Getters y Setters
     public String getUsuario() {
         return txtUsuario.getText();
     }

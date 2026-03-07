@@ -4,13 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.MediaSize.NA;
-
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     private String nombreUsuario;
     private String passwordHash;
-    private List<NA> notas;
+    private List<Nota> notas;
 
     public Usuario(String nombreUsuario, String passwordHash) {
         this.nombreUsuario = nombreUsuario;
@@ -19,7 +17,6 @@ public class Usuario implements Serializable {
     }
 
     // Getters y setters
-
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -36,11 +33,11 @@ public class Usuario implements Serializable {
         this.passwordHash = passwordHash;
     }
 
-    public List<NA> getNotas() {
+    public List<Nota> getNotas() {
         return notas;
     }
 
-    public void setNotas(List<NA> notas) {
+    public void setNotas(List<Nota> notas) {
         this.notas = notas;
     }
 
@@ -48,5 +45,4 @@ public class Usuario implements Serializable {
     public String toString() {
         return nombreUsuario;
     }
-
 }

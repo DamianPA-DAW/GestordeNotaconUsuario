@@ -74,10 +74,26 @@ public class MainView extends JFrame {
         add(lblStatus, BorderLayout.SOUTH);
     }
 
-    // Getters y Setters
+    // --- GETTERS QUE LE FALTABAN PARA EL CONTROLLER ---
+    
+    public JButton getBtnCrear() { return btnCrear; }
+    
+    public JButton getBtnEliminar() { return btnEliminar; }
+    
+    public JButton getBtnLimpiar() { return btnLimpiar; }
+
+    public JTextField getTxtTitulo() { return txtTitulo; }
+
+    public JTextArea getTxtContenido() { return txtContenido; }
+
+    // --- GETTERS Y MÉTODOS 
+
     public DefaultListModel<String> getModeloLista() { return modeloLista; }
+    
     public JList<String> getListaNotas() { return listaNotas; }
+    
     public String getTitulo() { return txtTitulo.getText(); }
+    
     public String getContenido() { return txtContenido.getText(); }
     
     public void setStatus(String mensaje) { 

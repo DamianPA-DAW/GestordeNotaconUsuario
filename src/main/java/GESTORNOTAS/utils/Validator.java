@@ -25,4 +25,8 @@ public class Validator {
         }
         return true;
     }
+
+    public static boolean validateNote(String titulo) {
+        return !isStringEmpty(titulo);
+    }
 }

@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Nota implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -11,16 +12,15 @@ public class Nota implements Serializable {
     private String contenido;
     private LocalDateTime fechaCreacion;
 
-    public Nota(String id, String titulo, String contenido) {
-        this.id = id;
+    public Nota(String titulo, String contenido) {
+        this.id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.contenido = contenido;
         this.fechaCreacion = LocalDateTime.now();
     }
 
     // Getters y Setters
-
-    public String getid() {
+    public String getId() {
         return id;
     }
 
@@ -53,5 +53,4 @@ public class Nota implements Serializable {
     public String toString() {
         return titulo;
     }
-
 }

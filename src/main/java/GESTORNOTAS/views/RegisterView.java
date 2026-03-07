@@ -14,7 +14,7 @@ public class RegisterView extends JFrame {
 
     public RegisterView() {
         setTitle("Registro de Usuario");
-        setSize(350, 320); // Un poco más alta para el campo extra
+        setSize(350, 320);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
