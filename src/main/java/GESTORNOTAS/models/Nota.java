@@ -50,7 +50,7 @@ public class Nota implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return titulo;
     }
 
