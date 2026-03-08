@@ -6,7 +6,7 @@ import views.MainView;
 import repository.FilePersistence;
 import utils.Validator;
 import java.util.List;
-import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class NotaController {
     private MainView view;
@@ -19,18 +19,16 @@ public class NotaController {
         this.usuarioActual = usuario;
         this.todosLosUsuarios = todosLosUsuarios;
         this.persistence = persistence;
-        
         cargarNotasEnLista();
         initEventHandlers();
     }
 
     private void initEventHandlers() {
         view.getBtnCrear().addActionListener(e -> crearNota());
-        
-        view.getBtnLimpiar().addActionListener(e -> view.limpiarCampos());
-
+        view.getBtnEditar().addActionListener(e -> editarNota());
         view.getBtnEliminar().addActionListener(e -> eliminarNota());
-        
+        view.getBtnBorrarTodo().addActionListener(e -> borrarTodo());
+        view.getBtnLimpiar().addActionListener(e -> view.limpiarCampos());
         view.getListaNotas().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) cargarNotaSeleccionada();
         });
@@ -39,16 +37,24 @@ public class NotaController {
     private void crearNota() {
         String titulo = view.getTitulo();
         String contenido = view.getContenido();
-
-        if (!Validator.validateNote(titulo)) {
-            view.setStatus("Error: El título no puede estar vacío");
+        if (Validator.isStringEmpty(titulo)) {
+            view.setStatus("Error: El título es obligatorio");
             return;
         }
+        usuarioActual.getNotas().add(new Nota(titulo, contenido));
+        actualizarYGuardar("Nota creada con éxito");
+    }
 
-        Nota nuevaNota = new Nota(titulo, contenido);
-        usuarioActual.getNotas().add(nuevaNota);
-        
-        actualizarYGuardar("Nota '" + titulo + "' creada correctamente");
+    private void editarNota() {
+        int index = view.getListaNotas().getSelectedIndex();
+        if (index == -1) {
+            view.setStatus("Error: Selecciona una nota primero");
+            return;
+        }
+        Nota n = usuarioActual.getNotas().get(index);
+        n.setTitulo(view.getTitulo());
+        n.setContenido(view.getContenido());
+        actualizarYGuardar("Nota actualizada");
     }
 
     private void eliminarNota() {
@@ -56,8 +62,14 @@ public class NotaController {
         if (index != -1) {
             usuarioActual.getNotas().remove(index);
             actualizarYGuardar("Nota eliminada");
-        } else {
-            view.setStatus("Selecciona una nota para eliminar");
+        }
+    }
+
+    private void borrarTodo() {
+        int confirm = JOptionPane.showConfirmDialog(view, "¿Borrar TODAS las notas?", "Aviso", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            usuarioActual.getNotas().clear();
+            actualizarYGuardar("Listado vaciado");
         }
     }
 
@@ -74,7 +86,7 @@ public class NotaController {
             Nota n = usuarioActual.getNotas().get(index);
             view.getTxtTitulo().setText(n.getTitulo());
             view.getTxtContenido().setText(n.getContenido());
-            view.setStatus("Viendo: " + n.getTitulo());
+            view.setStatus("Editando: " + n.getTitulo());
         }
     }
 

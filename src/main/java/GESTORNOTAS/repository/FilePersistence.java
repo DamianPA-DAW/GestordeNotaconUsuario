@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilePersistence {
-    private final String RUTA_ARCHIVO = "datos_app.dat";
+    private final String RUTA_ARCHIVO = "usuarios.dat";
 
     public void guardarDatos(List<Usuario> usuarios) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(RUTA_ARCHIVO))) {

@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class MainView extends JFrame {
-    private JList<String> listaNotas; 
+    private JList<String> listaNotas;
     private DefaultListModel<String> modeloLista;
     private JTextField txtTitulo;
     private JTextArea txtContenido;
@@ -13,43 +13,19 @@ public class MainView extends JFrame {
     private JLabel lblStatus;
 
     public MainView() {
-        setTitle("GESTOR DE NOTAS - Nivel 1");
+        setTitle("GESTOR DE NOTAS - Nivel 2");
         setSize(900, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- PANEL IZQUIERDO ---
-        JPanel panelIzquierdo = new JPanel(new BorderLayout());
-        panelIzquierdo.setBorder(new EmptyBorder(10, 10, 10, 0));
-
+        // --- INICIALIZACIÓN DE COMPONENTES ---
         modeloLista = new DefaultListModel<>();
         listaNotas = new JList<>(modeloLista);
-        JScrollPane scrollLista = new JScrollPane(listaNotas);
-        scrollLista.setPreferredSize(new Dimension(200, 0));
-        
-        panelIzquierdo.add(new JLabel("Mis Notas:"), BorderLayout.NORTH);
-        panelIzquierdo.add(scrollLista, BorderLayout.CENTER);
-
-        // --- PANEL CENTRAL ---
-        JPanel panelEditor = new JPanel(new BorderLayout(5, 5));
-        panelEditor.setBorder(new EmptyBorder(10, 10, 10, 10));
-
         txtTitulo = new JTextField();
         txtContenido = new JTextArea();
         txtContenido.setLineWrap(true);
         txtContenido.setWrapStyleWord(true);
-
-        JPanel panelCampos = new JPanel(new GridLayout(2, 1, 5, 5));
-        panelCampos.add(new JLabel("Título:"));
-        panelCampos.add(txtTitulo);
-        
-        panelEditor.add(panelCampos, BorderLayout.NORTH);
-        panelEditor.add(new JScrollPane(txtContenido), BorderLayout.CENTER);
-
-        // --- PANEL DERECHO ---
-        JPanel panelBotones = new JPanel(new GridLayout(6, 1, 5, 5));
-        panelBotones.setBorder(new EmptyBorder(10, 0, 10, 10));
 
         btnCrear = new JButton("Crear Nota");
         btnEditar = new JButton("Guardar Cambios");
@@ -57,7 +33,34 @@ public class MainView extends JFrame {
         btnLimpiar = new JButton("Limpiar Campos");
         btnBorrarTodo = new JButton("Borrar Todo");
         btnBorrarTodo.setForeground(Color.RED);
+        
+        lblStatus = new JLabel(" Bienvenido al Gestor de Notas");
+        lblStatus.setBorder(BorderFactory.createEtchedBorder());
 
+        // --- DISEÑO: PANEL IZQUIERDO (LISTADO) ---
+        JPanel panelIzquierdo = new JPanel(new BorderLayout());
+        panelIzquierdo.setBorder(new EmptyBorder(10, 10, 10, 0));
+        JScrollPane scrollLista = new JScrollPane(listaNotas);
+        scrollLista.setPreferredSize(new Dimension(200, 0));
+        panelIzquierdo.add(new JLabel("Mis Notas:"), BorderLayout.NORTH);
+        panelIzquierdo.add(scrollLista, BorderLayout.CENTER);
+
+        // --- DISEÑO: PANEL CENTRAL (EDITOR DE TEXTO) ---
+        JPanel panelEditor = new JPanel(new BorderLayout(5, 5));
+        panelEditor.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        // Sub-panel para el título
+        JPanel panelTitulo = new JPanel(new BorderLayout(5, 5));
+        panelTitulo.add(new JLabel("Título:"), BorderLayout.NORTH);
+        panelTitulo.add(txtTitulo, BorderLayout.CENTER);
+
+        panelEditor.add(panelTitulo, BorderLayout.NORTH);
+        panelEditor.add(new JScrollPane(txtContenido), BorderLayout.CENTER);
+
+        // --- DISEÑO: PANEL DERECHO (BOTONERA) ---
+        JPanel panelBotones = new JPanel(new GridLayout(6, 1, 5, 5));
+        panelBotones.setBorder(new EmptyBorder(10, 0, 10, 10));
+        
         panelBotones.add(btnCrear);
         panelBotones.add(btnEditar);
         panelBotones.add(btnEliminar);
@@ -65,39 +68,31 @@ public class MainView extends JFrame {
         panelBotones.add(btnLimpiar);
         panelBotones.add(btnBorrarTodo);
 
-        // --- PANEL INFERIOR ---
-        lblStatus = new JLabel(" Bienvenido al Gestor de Notas");
-        lblStatus.setBorder(BorderFactory.createEtchedBorder());
+        // --- MONTAJE FINAL ---
         add(panelIzquierdo, BorderLayout.WEST);
         add(panelEditor, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.EAST);
         add(lblStatus, BorderLayout.SOUTH);
     }
 
-    // --- GETTERS QUE LE FALTABAN PARA EL CONTROLLER ---
-    
+    // --- GETTERS PARA EL CONTROLADOR ---
     public JButton getBtnCrear() { return btnCrear; }
-    
+    public JButton getBtnEditar() { return btnEditar; }
     public JButton getBtnEliminar() { return btnEliminar; }
-    
     public JButton getBtnLimpiar() { return btnLimpiar; }
-
+    public JButton getBtnBorrarTodo() { return btnBorrarTodo; }
+    
     public JTextField getTxtTitulo() { return txtTitulo; }
-
     public JTextArea getTxtContenido() { return txtContenido; }
-
-    // --- GETTERS Y MÉTODOS 
-
-    public DefaultListModel<String> getModeloLista() { return modeloLista; }
-    
     public JList<String> getListaNotas() { return listaNotas; }
-    
+    public DefaultListModel<String> getModeloLista() { return modeloLista; }
+
+    // --- MÉTODOS DE UTILIDAD ---
     public String getTitulo() { return txtTitulo.getText(); }
-    
     public String getContenido() { return txtContenido.getText(); }
     
-    public void setStatus(String mensaje) { 
-        lblStatus.setText(" " + mensaje); 
+    public void setStatus(String mensaje) {
+        lblStatus.setText(" " + mensaje);
     }
 
     public void limpiarCampos() {
